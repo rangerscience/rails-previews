@@ -1,4 +1,6 @@
 require "rails/previews/version"
+require "rails/previews/engine"
+require "rails/previews/preview"
 
 module Rails
   module Previews

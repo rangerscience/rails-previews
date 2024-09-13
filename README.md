@@ -6,39 +6,95 @@ A Rails engine to allow previews of many different kinds of Rails view pieces, s
 - View Components
 - React-on-Rails React Components
 
+Cribbed from the internals of the preview engine for View Components, and built to work with the [rails-storybook](https://github.com/rangerscience/rails-storybook) gem.
+
+This gem is *extremely* barebones so far!
+
 ## Installation
 
 ```ruby
 gem 'rails-previews'
 ```
 
-TODO: Then, mount the engine in your routes file...
+Then mount the engine where you want it:
+```ruby
+mount Rails::Previews::Engine => "/previews"
+```
 
 ## Usage
 
-WIP
-
-Simple:
+Previews should be defined in `spec/preview/*.rb` files (and inherit from the helper class), inside a `Previews` module. Each class function becomes an example, and under the hood, it's just passing the hash directly into the bog-standard Rail's controller `render` function, so basic usage is simple:
 
 ```ruby
-class MyPreview < Rails::Preview
-  def my_partial
-    render :name_of_partial, locals: { name: "Stranger" }
-  end
+module Previews
+  class Example < Rails::Previews::Preview
+    def example_1
+      { plain: "Hello, World!" }
+    end
 
-  def my_view_component
-     MyViewComponent.new(name: "Stranger")
-  end
-
-  def my_react_component
-    render_react :name_of_component, props: { name: "Stranger" }
+    def example_2
+      { partial: 'your_partial_name',  locals: {  foo: "bar" } }
+    end
   end
 end
 ```
 
-Each of these will be made available as previews under `my_preview/my_partial`, `my_preview/my_view_component`, and `my_preview/my_react_compontent`.
+To cut down on boiler plate for partials, there's a utility function:
 
-And... that's it!
+```ruby
+module Previews
+  class Example < Rails::Previews::Preview
+    def example_2
+      render_partial 'your_partial_name', {  foo: "bar" }
+    end
+  end
+end
+```
+
+If you're using Github's View Components:
+
+```ruby
+module Previews
+  class Example < Rails::Previews::Preview
+    def example_3
+      MyViewComponent.new(name: "Foo")
+    end
+  end
+end
+```
+
+Lastly, if you're using Shakapacker's React On Rails, this gem provides a handy partial:
+```ruby
+module Previews
+  class Example < Rails::Previews::Preview
+    def example_4
+      {
+        partial: "previews/react_on_rails",
+        locals: {
+          pack: "application", # This being the name of your React component pack/bundle/thing
+          component_name: "MyReactComponent",
+          props: {foo: "bar"}
+        }
+      }
+    end
+  end
+end
+```
+
+Or, with a helper to eliminate boilerplate:
+```ruby
+module Previews
+  class Example < Rails::Previews::Preview
+    def example_4
+      render_react_on_rails "MyReactComponent", foo: "bar"
+    end
+  end
+end
+```
+(FYI: `pack` is an optional keyword argument, defaulting to `"application"`)
+
+Visit `http://localhost:3000/previews/` (or whever you mounted the engine) to see your examples!
+
 
 ## Development
 
