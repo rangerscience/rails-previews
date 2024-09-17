@@ -2,11 +2,20 @@
 require "rails/application_controller"
 
 class Rails::Previews::PreviewsController < ApplicationController
-  layout false
+  layout :resolve_layout
 
   def index
     @previews = Rails::Previews::Preview.all
-    render "previews/index", layout: false
+    render "previews/index"
+  end
+
+  def resolve_layout
+    # TODO: Brittle!
+    if request.headers["HTTP_ORIGIN"] == "http://localhost:6006"
+      'storybook'
+    else
+      'previews'
+    end
   end
 
   def show
