@@ -1,5 +1,9 @@
 module Rails::Previews
   class Preview
+    def render_slim(template)
+      { inline: template, type: :slim }
+    end
+
     def render_partial(name, locals = {})
       { partial: name, locals: locals }
     end

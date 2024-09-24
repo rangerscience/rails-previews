@@ -2,19 +2,17 @@
 require "rails/application_controller"
 
 class Rails::Previews::PreviewsController < ApplicationController
-  layout :resolve_layout
-
   def index
     @previews = Rails::Previews::Preview.all
-    render "previews/index"
+    render "previews/index", layout: "previews"
   end
 
   def resolve_layout
     # TODO: Brittle!
     if request.headers["HTTP_ORIGIN"] == "http://localhost:6006"
-      'storybook'
+      "storybook"
     else
-      'previews'
+      "previews"
     end
   end
 
@@ -28,9 +26,9 @@ class Rails::Previews::PreviewsController < ApplicationController
     example = klazz.new.send(example_name)
 
     if example.is_a? Hash
-      render **example
+      render **example, layout: resolve_layout
     else
-      render example
+      render example, layout: resolve_layout
     end
   end
 end
