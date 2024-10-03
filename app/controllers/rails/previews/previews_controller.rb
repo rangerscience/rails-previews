@@ -1,7 +1,7 @@
+class Rails::Previews::PreviewsController < ::ApplicationController
+  # TODO: Seems like this shouldn't be necessary, but main app paths weren't available as helpers
+  include Rails.application.routes.url_helpers
 
-require "rails/application_controller"
-
-class Rails::Previews::PreviewsController < ApplicationController
   def index
     @previews = Rails::Previews::Preview.all
     render "previews/index", layout: "previews"
