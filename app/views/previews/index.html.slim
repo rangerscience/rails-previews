@@ -1,5 +1,20 @@
-- @previews.each do |preview|
-  h3= preview.preview_name.titleize
-  ul 
-    - preview.examples.each do |example|
-      li= link_to example, preview_path("#{preview.preview_name}/#{example}")
+css:
+  .rails-previews h3 {
+    margin-top: 20px;
+  }
+
+  .rails-previews ul {
+    margin-left: 20px;
+    list-style: square inside;
+  }
+
+  .rails-previews a {
+    color: -webkit-link;
+  }
+
+.rails-previews
+  - @previews.each do |preview|
+    h3= preview.preview_name.titleize
+    ul
+      - preview.examples.each do |example|
+        li= link_to example, preview_path("#{preview.preview_name}/#{example}")
