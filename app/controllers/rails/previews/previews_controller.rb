@@ -1,6 +1,10 @@
 class Rails::Previews::PreviewsController < ::ApplicationController
   # TODO: Seems like this shouldn't be necessary, but main app paths weren't available as helpers
+  # ...and, definitely shouldn't be necssary to flail like this.
   include Rails.application.routes.url_helpers
+  class << self
+    include Rails.application.routes.url_helpers
+  end
 
   def index
     @previews = Rails::Previews::Preview.all
