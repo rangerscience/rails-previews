@@ -1,4 +1,4 @@
-module Rails::Previews
+module RailsPreviews
   class Preview
     def render_slim(template)
       { inline: template, type: :slim }

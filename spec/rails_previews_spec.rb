@@ -1,6 +1,6 @@
-RSpec.describe Rails::Previews do
+RSpec.describe RailsPreviews do
   it "has a version number" do
-    expect(Rails::Previews::VERSION).not_to be nil
+    expect(RailsPreviews::VERSION).not_to be nil
   end
 
   it "does something useful" do

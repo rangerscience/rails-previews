@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "rails/previews/version"
+require "rails_previews"
 
 Gem::Specification.new do |spec|
   spec.name          = "rails-previews"
-  spec.version       = Rails::Previews::VERSION
+  spec.version       = RailsPreviews::VERSION
   spec.authors       = [ "Nicholas Barone" ]
   spec.email         = [ "nicktbarone@gmail.com" ]
 

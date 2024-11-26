@@ -1,4 +1,4 @@
-# Rails::Previews
+# RailsPreviews
 
 A Rails engine to allow previews of many different kinds of Rails view pieces, specifically:
 
@@ -18,7 +18,7 @@ gem 'rails-previews'
 
 Then mount the engine where you want it:
 ```ruby
-mount Rails::Previews::Engine => "/previews"
+mount RailsPreviews::Engine => "/previews"
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ Previews should be defined in `spec/preview/*.rb` files (and inherit from the he
 
 ```ruby
 module Previews
-  class Example < Rails::Previews::Preview
+  class Example < RailsPreviews::Preview
     def example_1
       { plain: "Hello, World!" }
     end
@@ -43,7 +43,7 @@ To cut down on boiler plate for partials, there's a utility function:
 
 ```ruby
 module Previews
-  class Example < Rails::Previews::Preview
+  class Example < RailsPreviews::Preview
     def example_2
       render_partial 'your_partial_name', {  foo: "bar" }
     end
@@ -55,7 +55,7 @@ If you're using Github's View Components:
 
 ```ruby
 module Previews
-  class Example < Rails::Previews::Preview
+  class Example < RailsPreviews::Preview
     def example_3
       MyViewComponent.new(name: "Foo")
     end
@@ -66,7 +66,7 @@ end
 Lastly, if you're using Shakapacker's React On Rails, this gem provides a handy partial:
 ```ruby
 module Previews
-  class Example < Rails::Previews::Preview
+  class Example < RailsPreviews::Preview
     def example_4
       {
         partial: "previews/react_on_rails",
@@ -84,7 +84,7 @@ end
 Or, with a helper to eliminate boilerplate:
 ```ruby
 module Previews
-  class Example < Rails::Previews::Preview
+  class Example < RailsPreviews::Preview
     def example_4
       render_react_on_rails "MyReactComponent", foo: "bar"
     end
@@ -112,4 +112,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Rails::Previews project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rangerscience/rails-previews/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the RailsPreviews project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rangerscience/rails-previews/blob/master/CODE_OF_CONDUCT.md).

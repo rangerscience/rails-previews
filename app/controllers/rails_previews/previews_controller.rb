@@ -1,4 +1,4 @@
-class Rails::Previews::PreviewsController < ::ApplicationController
+class RailsPreviews::PreviewsController < ::ApplicationController
   # TODO: Seems like this shouldn't be necessary, but main app paths weren't available as helpers
   # ...and, definitely shouldn't be necssary to flail like this.
   include Rails.application.routes.url_helpers
@@ -7,7 +7,7 @@ class Rails::Previews::PreviewsController < ::ApplicationController
   end
 
   def index
-    @previews = Rails::Previews::Preview.all
+    @previews = RailsPreviews::Preview.all
     render "previews/index", layout: "previews"
   end
 
@@ -21,7 +21,7 @@ class Rails::Previews::PreviewsController < ::ApplicationController
   end
 
   def show
-    Rails::Previews::Preview.all # TODO: Autoloading instead (ideally)
+    RailsPreviews::Preview.all # TODO: Autoloading instead (ideally)
 
     klazz_name = Pathname.new(params[:path]).parent.to_s
     klazz = "Previews::#{klazz_name.camelize}".constantize

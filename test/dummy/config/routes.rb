@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Rails::Previews::Engine => "/rails-previews"
+  mount RailsPreviews::Engine => "/rails-previews"
 end
