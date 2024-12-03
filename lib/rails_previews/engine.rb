@@ -1,4 +1,4 @@
-require 'rails'
+require "rails"
 
 module RailsPreviews
   class Engine < Rails::Engine
