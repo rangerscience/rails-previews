@@ -12,22 +12,29 @@ class RailsPreviews::PreviewsController < ::ApplicationController
   end
 
   def resolve_layout
-    # TODO: Brittle!
-    if request.headers["HTTP_ORIGIN"] == "http://localhost:6006"
-      "storybook"
-    else
-      "previews"
-    end
+    params[:path].start_with?("storybook/") ? "storybook" : "previews"
+  end
+
+  def example_path
+    params[:path].delete_prefix("storybook/")
+  end
+
+  def example_class_name
+    Pathname.new(example_path).parent.to_s
+  end
+
+  def example_class
+    "Previews::#{example_class_name.camelize}".constantize
+  end
+
+  def example_name
+    Pathname.new(example_path).basename.to_s
   end
 
   def show
     RailsPreviews::Preview.all # TODO: Autoloading instead (ideally)
 
-    klazz_name = Pathname.new(params[:path]).parent.to_s
-    klazz = "Previews::#{klazz_name.camelize}".constantize
-
-    example_name = Pathname.new(params[:path]).basename.to_s
-    example = klazz.new.send(example_name)
+    example = example_class.new.send(example_name)
 
     if example.is_a? Hash
       render **example, layout: resolve_layout
