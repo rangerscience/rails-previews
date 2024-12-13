@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop-rails-omakase", "~> 1.0"
   spec.add_development_dependency "view_component", "~> 3.14"
   spec.add_development_dependency "react_on_rails", "~> 14.0"
-  spec.add_development_dependency "rails", "~> 7.2"
 
+  spec.add_dependency "rails", "~> 7.2"
   spec.add_dependency "slim", "~> 5.2"
 end
