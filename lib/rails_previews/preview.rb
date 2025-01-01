@@ -45,6 +45,10 @@ module RailsPreviews
       def examples
         public_instance_methods(false).map(&:to_s).sort
       end
+
+      def current_user
+        raise 'No current user defined for this preview'
+      end
     end
   end
 end

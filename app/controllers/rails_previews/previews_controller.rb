@@ -42,4 +42,8 @@ class RailsPreviews::PreviewsController < ::ApplicationController
       render example, layout: resolve_layout
     end
   end
+
+  def current_user
+    example_class.send(:current_user)    
+  end
 end
