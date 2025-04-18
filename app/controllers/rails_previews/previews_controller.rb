@@ -32,10 +32,19 @@ class RailsPreviews::PreviewsController < ::ApplicationController
     Pathname.new(example_path).basename.to_s
   end
 
+  def var_select(it)
+    !it.starts_with?("@_") && !it.starts_with?("@current")
+  end
+
   def show
     RailsPreviews::Preview.all # TODO: Autoloading instead (ideally)
 
-    example = example_class.new.send(example_name)
+    controller = example_class.new
+    example = controller.send(example_name)
+
+    controller.instance_variables.select { var_select it }.each do |var|
+      instance_variable_set(var, controller.instance_variable_get(var))
+    end
 
     if example.is_a? Hash
       render **example, layout: resolve_layout
