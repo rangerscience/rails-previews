@@ -46,6 +46,9 @@ class RailsPreviews::PreviewsController < ::ApplicationController
       instance_variable_set(var, controller.instance_variable_get(var))
     end
 
+    # WIP - This is the implied controller / view folder, and should have options to that effect..?
+    lookup_context.prefixes.prepend example_class_name
+
     if example.is_a? Hash
       render **example, layout: resolve_layout
     else
