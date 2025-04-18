@@ -21,6 +21,14 @@ Then mount the engine where you want it:
 mount RailsPreviews::Engine => "/previews"
 ```
 
+
+(Optional) Add this to `config/environments/development.rb` to autoreload previews:
+```ruby
+  module Previews; end
+  Rails.autoloaders.main.push_dir("#{Rails.root}/spec/previews", namespace: Previews)
+```
+Note: Might not notice NEW preview files - just restart the server!
+
 ## Usage
 
 Previews should be defined in `spec/preview/*.rb` files (and inherit from the helper class), inside a `Previews` module. Each class function becomes an example, and under the hood, it's just passing the hash directly into the bog-standard Rail's controller `render` function, so basic usage is simple:
@@ -62,36 +70,6 @@ module Previews
   end
 end
 ```
-
-Lastly, if you're using Shakapacker's React On Rails, this gem provides a handy partial:
-```ruby
-module Previews
-  class Example < RailsPreviews::Preview
-    def example_4
-      {
-        partial: "previews/react_on_rails",
-        locals: {
-          pack: "application", # This being the name of your React component pack/bundle/thing
-          component_name: "MyReactComponent",
-          props: {foo: "bar"}
-        }
-      }
-    end
-  end
-end
-```
-
-Or, with a helper to eliminate boilerplate:
-```ruby
-module Previews
-  class Example < RailsPreviews::Preview
-    def example_4
-      render_react_on_rails "MyReactComponent", foo: "bar"
-    end
-  end
-end
-```
-(FYI: `pack` is an optional keyword argument, defaulting to `"application"`)
 
 Visit `http://localhost:3000/previews/` (or whever you mounted the engine) to see your examples!
 

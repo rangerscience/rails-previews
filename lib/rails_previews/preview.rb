@@ -8,23 +8,9 @@ module RailsPreviews
       { partial: name, locals: locals }
     end
 
-    def render_react_on_rails(name, pack: "application", props: {})
-      raise "React on Rails is not installed - did you add the gem?" unless defined?(ReactOnRails)
-
-      {
-        partial: "previews/react_on_rails",
-        locals: {
-          pack: pack,
-          component_name: name,
-          props: props
-        }
-      }
-    end
-
     class << self
-      # TODO: Use regular Rails autoloading
       def all
-        load_previews!
+        load_previews! unless @loaded
         descendants
       end
 
@@ -32,7 +18,19 @@ module RailsPreviews
         Array(preview_paths).each do |preview_path|
           Dir["#{preview_path}/**/*.rb"].sort.each { |file| require_dependency file }
         end
+        @loaded = true
       end
+
+      # TODO: The above method might not catch *new* files, but there appear to be
+      #   some issues with the below:
+      # def load_previews!
+      #   @loaded_paths ||= []
+      #   paths = preview_paths.flat_map { Dir["#{it}/**/*.rb"] }.sort
+      #   (paths - @loaded_paths).each do |file|
+      #     require_dependency file
+      #     @loaded_paths << file
+      #   end
+      # end
 
       def preview_paths
         [ "#{Rails.root}/spec/previews" ]
