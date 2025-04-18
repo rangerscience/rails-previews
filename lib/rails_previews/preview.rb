@@ -47,7 +47,7 @@ module RailsPreviews
       end
 
       def current_user
-        raise 'No current user defined for this preview'
+        raise "No current user defined for this preview"
       end
     end
   end
