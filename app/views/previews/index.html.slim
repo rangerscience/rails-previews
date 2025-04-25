@@ -17,4 +17,4 @@ css:
     h3= preview.preview_name.titleize
     ul
       - preview.examples.each do |example|
-        li= link_to example, "previews/#{preview.preview_name}/#{example}"
+        li= link_to example, "#{preview.preview_name}/#{example}"
